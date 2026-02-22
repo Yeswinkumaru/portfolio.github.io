@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yeswinkumaru | Software Engineer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
+
+<style>
+:root{
+--bg:#ffffff;
+--text:#111827;
+--card:#f3f4f6;
+--accent:#2563eb;
+}
+.dark{
+--bg:#0f172a;
+--text:#e5e7eb;
+--card:#1e293b;
+--accent:#3b82f6;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;cursor:none;}
+body{background:var(--bg);color:var(--text);transition:0.4s;overflow-x:hidden;}
+
+#bg3d,#tsparticles{position:fixed;top:0;left:0;width:100%;height:100%;}
+#bg3d{z-index:-3;} 
+#tsparticles{z-index:-2;}
+
+.cursor{
+width:18px;height:18px;border:2px solid var(--accent);
+border-radius:50%;position:fixed;pointer-events:none;
+transform:translate(-50%,-50%);transition:0.1s ease;z-index:9999;
+}
+
+header{
+position:fixed;width:100%;top:0;padding:18px 8%;
+display:flex;justify-content:space-between;
+background:var(--bg);border-bottom:1px solid #ccc2;z-index:1000;
+}
+nav a{margin-left:25px;text-decoration:none;color:var(--text);}
+.toggle{background:var(--accent);color:#fff;border:none;padding:6px 12px;border-radius:20px;cursor:pointer;}
+
+section{padding:120px 10%;max-width:1100px;margin:auto;}
+#hero{height:100vh;display:flex;flex-direction:column;justify-content:center;}
+.typing{color:var(--accent);font-weight:600;}
+
+.card{background:var(--card);padding:25px;border-radius:14px;margin-bottom:20px;}
+.btn{margin-top:20px;padding:12px 22px;border-radius:25px;border:none;background:var(--accent);color:#fff;cursor:pointer;}
+
+input,textarea{
+width:100%;padding:12px;margin-bottom:15px;
+border-radius:8px;border:1px solid #ccc;
+background:var(--card);color:var(--text);
+}
+</style>
+</head>
+
+<body>
+
+<div id="bg3d"></div>
+<div id="tsparticles"></div>
+<div class="cursor"></div>
+
+<header>
+<div><strong>Yeswinkumaru</strong></div>
+<div>
+<nav>
+<a href="#skills">Skills</a>
+<a href="#projects">Projects</a>
+<a href="#experience">Experience</a>
+<a href="#education">Education</a>
+<a href="#contact">Contact</a>
+</nav>
+<button class="toggle" onclick="toggleTheme()">Theme</button>
+</div>
+</header>
+
+<section id="hero">
+<h1>Hi, I'm Yeswinkumaru</h1>
+<h2 class="typing"></h2>
+<p>
+Dedicated Software Engineer with expertise in Python development, automation systems,
+AI-based solutions, and scalable web technologies.
+</p>
+<a href="Yeswinkumaru_Resume.pdf" download>
+<button class="btn">Download Resume</button>
+</a>
+</section>
+
+<section id="skills">
+<h2>Technical Skills</h2>
+<div class="card">
+Programming: Python, C, SQL <br><br>
+Web Technologies: HTML, CSS, JavaScript <br><br>
+Libraries & Tools: OpenCV, NumPy, Pandas <br><br>
+Automation: Workflow scripting, Process automation <br><br>
+Database: MySQL <br><br>
+Cloud & Platforms: Basic Cloud Concepts <br><br>
+Tools: Git, GitHub, VS Code <br><br>
+Core: Data Structures, Algorithms, OOPS
+</div>
+</section>
+
+<section id="projects">
+<h2>Projects</h2>
+<div class="card">Face Recognition Attendance System – AI-based automated biometric attendance.</div>
+<div class="card">Automation Workflow Scripts – Process optimization using Python.</div>
+<div class="card">Advanced 3D Portfolio Website – Three.js & Particle powered UI.</div>
+</section>
+
+<section id="experience">
+<h2>Professional Experience</h2>
+<div class="card">Quality Engineering Intern – Lenovo Pvt Ltd</div>
+<div class="card">Python Developer Intern – Codesoft</div>
+</section>
+
+<section id="education">
+<h2>Education</h2>
+<div class="card">Bachelor of Engineering (B.E.)</div>
+</section>
+
+<section id="contact">
+<h2>Contact</h2>
+<div class="card">
+Email: yeswinkumaru@gmail.com <br>
+Phone: +91 6381963212 <br>
+LinkedIn: linkedin.com/in/yeswinkumaru
+</div>
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+<input type="text" name="name" placeholder="Your Name" required>
+<input type="email" name="email" placeholder="Your Email" required>
+<textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+<button class="btn" type="submit">Send Message</button>
+</form>
+</section>
+
+<script>
+function toggleTheme(){ document.body.classList.toggle("dark"); }
+
+const words=["Software Engineer","Automation Developer","AI Enthusiast"];
+let i=0,j=0,current="",deleting=false;
+const typing=document.querySelector(".typing");
+function type(){
+if(!deleting && j<=words[i].length){current=words[i].substring(0,j++);typing.textContent=current;}
+if(deleting && j>=0){current=words[i].substring(0,j--);typing.textContent=current;}
+if(j==words[i].length){deleting=true;setTimeout(type,1000);return;}
+if(deleting && j==0){deleting=false;i=(i+1)%words.length;}
+setTimeout(type,deleting?50:100);
+}
+type();
+
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",(e)=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+const renderer=new THREE.WebGLRenderer({alpha:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.getElementById("bg3d").appendChild(renderer.domElement);
+
+const geometry=new THREE.TorusKnotGeometry(10,3,100,16);
+const material=new THREE.MeshBasicMaterial({color:0x2563eb,wireframe:true});
+const torus=new THREE.Mesh(geometry,material);
+scene.add(torus);
+camera.position.z=30;
+
+function animate(){
+requestAnimationFrame(animate);
+torus.rotation.x+=0.003;
+torus.rotation.y+=0.005;
+renderer.render(scene,camera);
+}
+animate();
+
+tsParticles.load("tsparticles",{
+particles:{number:{value:50},size:{value:2},move:{speed:1},links:{enable:true,distance:150}}
+});
+</script>
+
+</body>
+</html>
